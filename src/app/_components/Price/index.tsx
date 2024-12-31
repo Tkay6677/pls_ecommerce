@@ -1,80 +1,60 @@
-'use client'
+'use client';
 
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react';
 
-import { Product } from '../../../payload/payload-types'
-import { AddToCartButton } from '../AddToCartButton'
-import { RemoveFromCartButton } from '../RemoveFromCartButton'
+import { Product } from '../../../payload/payload-types';
+import { AddToCartButton } from '../AddToCartButton';
+import { RemoveFromCartButton } from '../RemoveFromCartButton';
 
-import classes from './index.module.scss'
-
-export const priceFromJSON = (priceJSON: string, quantity: number = 1, raw?: boolean): string => {
-  let price = ''
-
-  if (priceJSON) {
-    try {
-      const parsed = JSON.parse(priceJSON)?.data[0]
-      const priceValue = parsed.unit_amount * quantity
-      const priceType = parsed.type
-
-      if (raw) return priceValue.toString()
-
-      price = (priceValue / 100).toLocaleString('en-US', {
-        style: 'currency',
-        currency: 'USD', // TODO: use `parsed.currency`
-      })
-
-      if (priceType === 'recurring') {
-        price += `/${
-          parsed.recurring.interval_count > 1
-            ? `${parsed.recurring.interval_count} ${parsed.recurring.interval}`
-            : parsed.recurring.interval
-        }`
-      }
-    } catch (e) {
-      console.error(`Cannot parse priceJSON`) // eslint-disable-line no-console
-    }
-  }
-
-  return price
-}
+import classes from './index.module.scss';
 
 export const Price: React.FC<{
-  product: Product
-  quantity?: number
-  button?: 'addToCart' | 'removeFromCart' | false
+  product: Product;
+  quantity?: number;
+  button?: 'addToCart' | 'removeFromCart' | false;
 }> = props => {
-  const { product, product: { priceJSON } = {}, button = 'addToCart', quantity } = props
+  const { product, button = 'addToCart', quantity = 1 } = props;
+  const { priceJSON } = product;
 
-  const [price, setPrice] = useState<{
-    actualPrice: string
-    withQuantity: string
-  }>(() => ({
-    actualPrice: priceFromJSON(priceJSON),
-    withQuantity: priceFromJSON(priceJSON, quantity),
-  }))
+  const [priceDisplay, setPriceDisplay] = useState<{
+    totalPrice: string;
+    breakdown: string;
+  }>({
+    totalPrice: '',
+    breakdown: '',
+  });
 
   useEffect(() => {
-    setPrice({
-      actualPrice: priceFromJSON(priceJSON),
-      withQuantity: priceFromJSON(priceJSON, quantity),
-    })
-  }, [priceJSON, quantity])
+    if (priceJSON) {
+      const total = (Number(priceJSON) * quantity).toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      });
+
+      const breakdown = `${Number(priceJSON).toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      })} x ${quantity}`;
+      
+      setPriceDisplay({
+        totalPrice: total,
+        breakdown: quantity > 1 ? breakdown : '',
+      });
+    }
+  }, [priceJSON, quantity]);
 
   return (
     <div className={classes.actions}>
-      {typeof price?.actualPrice !== 'undefined' && price?.withQuantity !== '' && (
+      {priceJSON && (
         <div className={classes.price}>
-          <p>{price?.withQuantity}</p>
-          {quantity > 1 && (
-            <small className={classes.priceBreakdown}>{`${price.actualPrice} x ${quantity}`}</small>
+          <p>{priceDisplay.totalPrice}</p>
+          {priceDisplay.breakdown && (
+            <small className={classes.priceBreakdown}>{priceDisplay.breakdown}</small>
           )}
         </div>
       )}
-      {button && button === 'addToCart' && (
-        <AddToCartButton product={product} appearance="default" />
-      )}
-      {button && button === 'removeFromCart' && <RemoveFromCartButton product={product} />}
+      {button === 'addToCart' && <AddToCartButton product={product} appearance="default" />}
+      {button === 'removeFromCart' && <RemoveFromCartButton product={product} />}
     </div>
-  )
-}
+  );
+};

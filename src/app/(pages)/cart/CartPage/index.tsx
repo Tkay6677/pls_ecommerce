@@ -94,7 +94,7 @@ export const CartPage: React.FC<{
                           )}
                         </Link>
                         <div className={classes.rowContent}>
-                          {!stripeProductID && (
+                          {/* {!stripeProductID && (
                             <p className={classes.warning}>
                               {
                                 'This product is not yet connected to Stripe. To link this product, '
@@ -106,7 +106,7 @@ export const CartPage: React.FC<{
                               </Link>
                               {'.'}
                             </p>
-                          )}
+                          )} */}
                           <h5 className={classes.title}>
                             <Link href={`/products/${product.slug}`} className={classes.titleLink}>
                               {title}

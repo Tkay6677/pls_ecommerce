@@ -29,26 +29,28 @@ export async function Footer() {
         <Link href="/">
           <picture>
             <img
-              className={classes.logo}
+             
               alt="Shopkart Logo"
-              src="https://shoppingkart.payloadcms.app/media/shopkart.png"
+              src="/logo.png"
+              width={150}
+              height={100}
             />
           </picture>
         </Link>
         <nav className={classes.nav}>
-          <ThemeSelector />
+          {/* <ThemeSelector /> */}
           {navItems.map(({ link }, i) => {
             return <CMSLink key={i} {...link} />
           })}
-          <Link
+          {/* <Link
             href="https://github.com/payloadcms/payload/tree/master/templates/ecommerce"
             target="_blank"
             rel="noopener noreferrer"
           >
             Source Code
-          </Link>
+          </Link> */}
           <Link href="https://payloadcms.com" target="_blank" rel="noopener noreferrer">
-            Payload
+            Princess Luxury Store
           </Link>
         </nav>
       </Gutter>

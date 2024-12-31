@@ -35,9 +35,9 @@ export async function Header() {
               Instead, we just use CSS to invert the color via `filter: invert(1)` based on `[data-theme="dark"]`
             */}
             <img
-              className={classes.logo}
               alt="Shopkart Logo"
-              src="https://shoppingkart.payloadcms.app/media/shopkart.png"
+              src="/logo.png"
+              width={120}
             />
           </Link>
           <HeaderNav header={header} />

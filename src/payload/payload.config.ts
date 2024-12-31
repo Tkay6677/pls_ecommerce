@@ -23,6 +23,9 @@ import { Header } from './globals/Header'
 import { Settings } from './globals/Settings'
 import { priceUpdated } from './stripe/webhooks/priceUpdated'
 import { productUpdated } from './stripe/webhooks/productUpdated'
+import BeforeLogin from './components/BeforeLogin'
+import BeforeDashboard from './components/BeforeDashboard'
+import { seed } from './endpoints/seed'
 
 const generateTitle: GenerateTitle = () => {
   return 'My Store'
@@ -40,10 +43,10 @@ export default buildConfig({
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
-      //beforeLogin: [BeforeLogin],
+      beforeLogin: [BeforeLogin],
       // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
-      //beforeDashboard: [BeforeDashboard],
+      beforeDashboard: [BeforeDashboard],
     },
     webpack: config => ({
       ...config,
@@ -96,11 +99,11 @@ export default buildConfig({
     },
     // The seed endpoint is used to populate the database with some example data
     // You should delete this endpoint before deploying your site to production
-    // {
-    //   path: '/seed',
-    //   method: 'get',
-    //   handler: seed,
-    // },
+    {
+      path: '/seed',
+      method: 'get',
+      handler: seed,
+    },
   ],
   plugins: [
     stripePlugin({

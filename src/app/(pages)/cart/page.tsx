@@ -55,7 +55,7 @@ export default async function Cart() {
 
   return (
     <Fragment>
-      {!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY && (
+      {/* {!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY && (
         <Gutter>
           <Message
             className={classes.message}
@@ -82,7 +82,7 @@ export default async function Cart() {
             }
           />
         </Gutter>
-      )}
+      )} */}
       <Hero {...page?.hero} />
       <Gutter>
         <CartPage settings={settings} page={page} />

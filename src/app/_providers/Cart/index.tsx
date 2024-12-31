@@ -227,19 +227,31 @@ export const CartProvider = props => {
   useEffect(() => {
     if (!hasInitialized) return
 
-    const newTotal =
-      cart?.items?.reduce((acc, item) => {
-        return (
-          acc +
-          (typeof item.product === 'object'
-            ? JSON.parse(item?.product?.priceJSON || '{}')?.data?.[0]?.unit_amount *
-              (typeof item?.quantity === 'number' ? item?.quantity : 0)
-            : 0)
-        )
-      }, 0) || 0
+    const newTotal = 
+  cart?.items?.reduce((acc, item) => {
+    if (typeof item.product === 'object') {
+      const productPrice = Number(item?.product?.priceJSON) || 0; // Ensure `priceJSON` is numeric
+      const quantity = typeof item?.quantity === 'number' ? item.quantity : 0;
+      return acc + productPrice * quantity;
+
+    }
+   
+  }, 0) || 0;
+
+
+    // const newTotal =
+    //   cart?.items?.reduce((acc, item) => {
+    //     return (
+    //       acc +
+    //       (typeof item.product === 'object'
+    //         ? Number(item?.product?.priceJSON) *
+    //           (typeof item?.quantity === 'number' ? item?.quantity : 0)
+    //         : 0)
+    //     )
+    //   }, 0) || 0
 
     setTotal({
-      formatted: (newTotal / 100).toLocaleString('en-US', {
+      formatted: (newTotal).toLocaleString('en-US', {
         style: 'currency',
         currency: 'USD',
       }),

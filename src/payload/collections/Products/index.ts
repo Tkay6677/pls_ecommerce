@@ -46,6 +46,15 @@ const Products: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    // {
+    //   name: 'price',
+    //   type: 'number',
+    //   required: true,
+    //   label: 'Price (USD)',
+    //   admin: {
+    //     position: 'sidebar',
+    //   },
+    // },
     {
       name: 'publishedDate',
       type: 'date',
@@ -85,8 +94,8 @@ const Products: CollectionConfig = {
               label: 'Price JSON',
               type: 'textarea',
               admin: {
-                readOnly: true,
-                hidden: true,
+                readOnly: false,
+                hidden: false,
                 rows: 10,
               },
             },

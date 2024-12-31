@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { Order } from '../../../../payload/payload-types'
 import { Button } from '../../../_components/Button'
 import { Message } from '../../../_components/Message'
-import { priceFromJSON } from '../../../_components/Price'
+// import { priceFromJSON } from '../../../_components/Price'
 import { useCart } from '../../../_providers/Cart'
 
 import classes from './index.module.scss'
@@ -59,7 +59,7 @@ export const CheckoutForm: React.FC<{}> = () => {
                   quantity,
                   price:
                     typeof product === 'object'
-                      ? priceFromJSON(product.priceJSON, 1, true)
+                      ? product.priceJSON
                       : undefined,
                 })),
               }),

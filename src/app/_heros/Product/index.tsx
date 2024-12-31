@@ -19,12 +19,13 @@ export const ProductHero: React.FC<{
     stripeProductID,
     title,
     categories,
+    priceJSON,
     meta: { image: metaImage, description } = {},
   } = product
 
   return (
     <Fragment>
-      {!stripeProductID && (
+      {/* {!stripeProductID && (
         <Gutter>
           <Message
             className={classes.warning}
@@ -41,7 +42,7 @@ export const ProductHero: React.FC<{
             }
           />
         </Gutter>
-      )}
+      )} */}
       <Gutter className={classes.productHero}>
         <div className={classes.content}>
           <div className={classes.categories}>
@@ -67,7 +68,8 @@ export const ProductHero: React.FC<{
               {'.'}
             </p>
           </div>
-          <Price product={product} button={false} />
+          {/* <Price product={product} button={false} /> */}
+            {product && <Price product={product} button={false} />}
           <AddToCartButton product={product} className={classes.addToCartButton} />
         </div>
         <div className={classes.media}>

@@ -1,7 +1,11 @@
 .video {
   max-width: 100%;
   width: 100%;
-  background-color: var(--theme-elevation-50);
+  height: 400px;
+  // background-color: var(--theme-elevation-50);
+  // object-fit: contain;
+  background: #fff;
+  padding: 14px;
 }
 
 .cover {
